@@ -1,0 +1,19 @@
+{
+  "name": "my-cli",
+  "version": "0.0.1",
+  "description": "学习前端脚手架开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huochezaodian/my-cli.git"
+  },
+  "author": "huochezaodian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huochezaodian/my-cli/issues"
+  },
+  "homepage": "https://github.com/huochezaodian/my-cli#readme"
+}
