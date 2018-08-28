@@ -1,6 +1,6 @@
 {
   "name": "yty-cli",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "学习前端脚手架开发",
   "main": "index.js",
   "bin": "index.js",
