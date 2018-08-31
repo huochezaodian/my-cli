@@ -1,23 +1,23 @@
 const { logWithSpinner, stopSpinner } = require('../src/util/spinner')
 const { error, clearConsole, log } = require('../src/util/logger')
-const fetchRemoteTemplate = require('../src/util/loadFile')
-const copyTemplate = require('../src/util/loadFile')
+const { fetchRemoteTemplate, copyTemplate } = require('../src/util/loadFile')
 const path = require('path')
 const inquirer = require('inquirer')
 const validateProjectName = require('validate-npm-package-name')
 const fs = require('fs')
-const fse = require('fse')
+const fse = require('fs-extra')
 const child_process = require('child_process')
+const chalk = require('chalk')
 
 async function init () {
-  const { project } = await inquirer.propmt([
+  const { project } = await inquirer.prompt([
     {
       name: 'project',
       message: 'please enter the project name',
       default: 'my-project'
     }
   ])
-  const { tpl } = await inquirer.propmt([
+  const { tpl } = await inquirer.prompt([
     {
       name: 'tpl',
       type: 'list',
@@ -52,24 +52,29 @@ async function init () {
     if (!ok) {
       return
     } else {
+      logWithSpinner('delete the old project dir')
       await fse.remove(targetDir)
-      await fse.mkdir(targetDir)
+      stopSpinner()
     }
   }
 
-  await clearConsole()
+  // await clearConsole()
 
-  logWithSpinner('🚀', 'download remote templete ...')
+  logWithSpinner('create the new project dir')
+  await fse.mkdir(targetDir)
+  stopSpinner()
+
+
+  logWithSpinner('download remote templete')
   await fetchRemoteTemplate()
-  stopSpinner('🚀', 'download success.')
+  stopSpinner()
 
-  logWithSpinner('📄', 'create project ...')
+  logWithSpinner('create project file')
   await copyTemplate(tpl, targetDir)
-  stopSpinner('📄', 'create success.')
-  log('next install lib ...')
+  stopSpinner()
 
-  await child_process.execSync('cd' + tpl + '&&' + 'npm install')
-  log('install success.')
+  // await child_process.execSync('cd ' + project)
+  log(chalk.green('✔') + '  the project initialization is complete.')
 
   process.exit(1)
 }

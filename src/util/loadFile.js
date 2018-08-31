@@ -1,10 +1,10 @@
 const fs = require('fs')
-const fse = require('fse')
+const fse = require('fs-extra')
 const path = require('path')
 const os = require('os')
 const download = require('download-git-repo')
 
-module.exports = async function fetchRemoteTemplate () {
+exports.fetchRemoteTemplate = async () => {
   const tmpdir = path.join(os.tmpdir(), 'yty-cli')
 
   if (fs.existsSync(tmpdir)) {
@@ -19,10 +19,10 @@ module.exports = async function fetchRemoteTemplate () {
   })
 }
 
-module.exports = async function copyTemplate (templateName, targetDir) {
+exports.copyTemplate = async (templateName, targetDir) => {
   const tmpdir = path.join(os.tmpdir(), 'yty-cli')
 
-  await fse.copy(path.join(tmpdir, templateName, '/*.*'), targetDir)
+  await fse.copy(path.join(tmpdir, templateName), targetDir)
 
   await fse.remove(tmpdir)
 }

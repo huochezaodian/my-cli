@@ -19,13 +19,9 @@ checkNodeVersion(nodeVersion, 'yty-cli');
 const program = require('commander');
 
 program
-  .version(require('../package').version)
+  .version(require('../package').version, '-v, --version')
+  .usage('[options]')
   .option('-i, --init', '初始化项目文件夹')
-  .parse(process.argv);
-
-if (program.init) {
-  require('../src/init')()
-}
 
 program.on('--help', function () {
   console.log('  Examples:')
@@ -35,3 +31,9 @@ program.on('--help', function () {
   console.log('    $ yty-cli -i')
   console.log()
 })
+
+program.parse(process.argv)
+
+if (program.init) {
+  require('../src/init')()
+}
